@@ -14,4 +14,4 @@ When you open a query window in SSMS to start working on the first lab, leave it
 
 ___
 
-▶ [Lab: Encrypt a Table using Always Encrypted](https://github.com/lennilobel/sql2022-workshop-hol/blob/main/HOL/3.%20Security%20Features/4.%20Always%20Encrypted/1.%20Encrypt%20a%20Table.md)
+▶ [Lab: Encrypt a Table using Always Encrypted](https://github.com/lennilobel/sql2022-workshop-hol-vegas2025/blob/master/HOL/3.%20Security%20Features/4.%20Always%20Encrypted/1.%20Encrypt%20a%20Table.md)
