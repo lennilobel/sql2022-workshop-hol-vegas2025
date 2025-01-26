@@ -1,4 +1,4 @@
-﻿# Security Features
+﻿# AI Features
 
 This labs in this section dive into several robust security features available in SQL Server 2022, aimed at providing comprehensive data protection and compliance capabilities. As data security becomes increasingly paramount, understanding and implementing these features is critical for safeguarding sensitive information and ensuring data integrity.
 
