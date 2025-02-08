@@ -1,4 +1,39 @@
 /*
+Hi GPT!
+
+This first T-SQL comment block is my "system prompt" to you, where I need your assistance
+creating a lab for students to learn how to AI-enable their SQL Server database using the
+new native vector data type and VECTOR_DISTANCE function in T-SQL. These capabilities are
+available today in preview in Azure SQL Database, and will be generally available in SQL
+Server 2025 as well, when it is eventually released later this year.
+
+First, please have a look at the style and presentation of other labs that I've built
+for SQL Server developers at this link: 
+
+https://github.com/lennilobel/sql2022-workshop-hol/blob/main/HOL/2.%20Temporal%20Tables/1.%20Creating%20Temporal%20Tables.md
+
+Use similar style for generating the lab content for this AI lab.
+
+I need you to generate seven distinct .md (markdown) files from the content below.
+Specifically, refer to each subsequent comment block for each markdown file, which
+will be one for the introduction (which should be named README.md), and then one
+for each step. There are seven steps in total, with .md files that should be named
+accordingly as follows:
+
+Step 1 - Connect to the SQL Server
+Step 2 - Create the database
+Step 3 - Create and populate the Movie table
+Step 4 - Create the VectorizeText stored procedure
+Step 5 - Vectorize the database
+Step 6 - Create the VectorSearch stored procedure
+Step 7 - Run AI queries
+
+Finally, there are certain sections below that I want you to completely ignore, because
+they are notes just to myself. Ignore any content between /* START_IGNORE */ and /* END_IGNORE */
+delimiters.
+*/
+
+/*
 Introduction
 
 We will be learning how to leverage AI in SQL Server 2025.
@@ -21,7 +56,7 @@ deployed that resources prior to the lab.
 */
 
 /*
-Step 1 - Connect to the server
+Step 1 - Connect to the SQL Server
 
 Assuming the user is already running SSMS, write the instructions to connect to the
 server.
@@ -125,10 +160,12 @@ Explain that sp_invoke_external_rest_endpoint will be available in SQL Server 20
 
 Explain how the call is constructed from these components:
 
-x 1. The URL starts with an endpoint formatted as 'https://<resource-name>.openai.azure.com/',
-x that specifies the Azure OpenAI resource that we are targeting, which is vslive-openai in
-x this case. This is available from the Azure portal, and can be copied and pasted in
-x as https://vslive-openai.openai.azure.com/.
+/* START_IGNORE */
+1. The URL starts with an endpoint formatted as 'https://<resource-name>.openai.azure.com/',
+that specifies the Azure OpenAI resource that we are targeting, which is vslive-openai in
+this case. This is available from the Azure portal, and can be copied and pasted in
+as https://vslive-openai.openai.azure.com/.
+/* END_IGNORE */
 
 1. The URL starts with an endpoint to the model deployment. This is available from the Azure
 portal, and can be copied and pasted in as https://lenni-m6wi7gcd-eastus2.cognitiveservices.azure.com/.
@@ -185,31 +222,41 @@ AS
 BEGIN
 
 	-- Your Azure OpenAI endpoint
+/* START_IGNORE */
 --	DECLARE @OpenAIEndpoint varchar(max) = 'https://vslive-openai.openai.azure.com/'
-	DECLARE @OpenAIEndpoint varchar(max) = 'https://lenni-m6wi7gcd-eastus2.cognitiveservices.azure.com/'
+/* END_IGNORE */
+DECLARE @OpenAIEndpoint varchar(max) = 'https://lenni-m6wi7gcd-eastus2.cognitiveservices.azure.com/'
 	
+/* START_IGNORE */
 --	-- The 'text-embedding-3-small' model yields 1536 components (floating point values) per vector
 --	DECLARE @OpenAIDeploymentName varchar(max) = 'text-embedding-3-smal'
+/* END_IGNORE */
 
 	-- The 'text-embedding-3-large' model yields 3072 components (floating point values) per vector
 	DECLARE @OpenAIDeploymentName varchar(max) = 'text-embedding-3-large'
 
 	-- Specify the API version
+/* START_IGNORE */
 --	DECLARE @OpenAIVersion varchar(max) = '2023-03-15-preview'	-- for text-embedding-3-small
+/* END_IGNORE */
 	DECLARE @OpenAIVersion varchar(max) = '2023-05-15'			-- for text-embedding-3-large
 
 	-- Construct the URL from the Azure OpenAI endpoint, model deployment name, and API version		
 	DECLARE @Url varchar(max) = CONCAT(@OpenAIEndpoint, 'openai/deployments/', @OpenAIDeploymentName, '/embeddings?api-version=', @OpenAIVersion)
 
 	-- Your Azure OpenAI API key
+/* START_IGNORE */
 --	DECLARE @OpenAIApiKey varchar(max) = '5QhWOit1wdLVaPQ8DA2LV8kagSw02aXLE5e2BRi8UiMrNQAuiGBEJQQJ99BBACYeBjFXJ3w3AAABACOGb3ts'				
+/* END_IGNORE */
 	DECLARE @OpenAIApiKey varchar(max) = '1l01K92g5ObpFKmgMVs8RJ8XC3IY6bNTGtj0ECyQqRV0CztW8Qu4JQQJ99BBACHYHv6XJ3w3AAAAACOGrnno'				
 
 	-- Construct the headers from the API key
 	DECLARE @Headers varchar(max) = JSON_OBJECT('api-key': @OpenAIApiKey)
 
+/* START_IGNORE */
 	---- Construct the payload from the text to be vectorized
 	--DECLARE @Payload varchar(max) = JSON_OBJECT('input': @Text)
+/* END_IGNORE */
 
 	-- Construct the payload from the text to be vectorized, and request that the vector returned be compressed
 	-- from 3072 elements (the vector size for text-embedding-3-large) down to 1536 elements (the size of the
