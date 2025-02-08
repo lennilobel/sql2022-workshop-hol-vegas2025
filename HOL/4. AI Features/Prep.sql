@@ -138,10 +138,12 @@ INSERT INTO Movie (Title) VALUES
 	('Return of the Jedi'),
 	('The Godfather'),
 	('Animal House'),
-	('The Two Towers'),
+	('The Two Towers')
 	-- Add a few more of your favorite movies
-	('2001: A Space Odyssey'),
-	('Vanilla Sky')
+/* START_IGNORE */
+--	('2001: A Space Odyssey'),
+--	('Vanilla Sky')
+/* END_IGNORE */
 GO
 
 -- Query the table, note we have no vectors yet
@@ -421,7 +423,9 @@ EXEC VectorSearch 'Comedy'
 EXEC VectorSearch 'Fantasy/Adventure'
 
 -- Add a few more questions relating to your favorite movies
+/* START_IGNORE */
 EXEC VectorSearch 'HAL'
 EXEC VectorSearch 'I''m sorry Dave, I''m afraid I can''t do that'
 EXEC VectorSearch 'Tom Cruise'
 EXEC VectorSearch 'Psycho Thriller'
+/* END_IGNORE */
