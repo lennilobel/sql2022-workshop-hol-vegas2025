@@ -1,0 +1,33 @@
+# Step 7 - Run AI Queries
+
+Now, let's test **AI-powered search**!
+
+## Why Is This Cool?
+
+Instead of **matching exact words**, our queries will now **understand meaning**!
+
+---
+
+## Try These Queries
+
+Run these SQL commands:
+
+```sql
+-- Famous movie quotes
+EXEC VectorSearch 'May the force be with you';
+EXEC VectorSearch 'I''m gonna make him an offer he can''t refuse';
+
+-- Movie characters
+EXEC VectorSearch 'Luke Skywalker';
+EXEC VectorSearch 'Don Corleone';
+
+-- Movie genres
+EXEC VectorSearch 'Science fiction';
+EXEC VectorSearch 'Comedy';
+```
+
+✅ Notice how **AI finds the right movies**, even when the text is different!
+
+---
+
+🎉 **Congratulations! You have AI-enabled your SQL Server database!** 🎉

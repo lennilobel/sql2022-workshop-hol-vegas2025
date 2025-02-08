@@ -432,3 +432,20 @@ EXEC VectorSearch 'I''m sorry Dave, I''m afraid I can''t do that'
 EXEC VectorSearch 'Tom Cruise'
 EXEC VectorSearch 'Psycho Thriller'
 /* END_IGNORE */
+
+
+
+/* Post pass 1:
+
+That's a good start. But you are not providing nearly enough detail for my needs. Again, I refer you to an example of an existing lab that I've built, at: https://github.com/lennilobel/sql2022-workshop-hol/blob/main/HOL/2.%20Temporal%20Tables/1.%20Creating%20Temporal%20Tables.md.
+
+As you can see, I need you to explain important concepts. I've taken the time to elaborate on what needs to be conveyed in all the comment blocks. So I need you to paraphrase all those concepts, and provide clear step-by-step guidance to complete each step in the lab.
+
+*/
+
+
+/* Post pass 2:
+
+Thanks! It's getting better, but can be definitely improved. I need you to include the complete T-SQL scripts that I provided, without reducing them down to a subset. And I need more explanation about why we need to reduce the vector size from 3072 to 1536, given that we're using a vector(1536) data type to store vectors from the text-embedding-3-large model (which have 3072 elements, but is being compressed by the dimensions value in the payload to Azure OpenAI).
+
+*/
