@@ -89,6 +89,8 @@ be limited to string matching on the movie title (substring, starts with, ends
 with, and at most, regular expressions).
 */
 
+DROP TABLE IF EXISTS Movie
+
 -- Create a table to hold movie titles and associated vectors
 CREATE TABLE Movie (
 	MovieId int IDENTITY,
@@ -101,10 +103,10 @@ INSERT INTO Movie (Title) VALUES
 	('Return of the Jedi'),
 	('The Godfather'),
 	('Animal House'),
-	('The Two Towers')
+	('The Two Towers'),
 	-- Add a few more of your favorite movies
-	--('2001: A Space Odyssey'),
-	--('Vanilla Sky')
+	('2001: A Space Odyssey'),
+	('Vanilla Sky')
 GO
 
 -- Query the table, note we have no vectors yet
@@ -176,7 +178,7 @@ in Azure OpenAI.
 */
 
 -- Create a stored procedure that can call Azure OpenAI to vectorize any text
-CREATE PROCEDURE VectorizeText
+CREATE OR ALTER PROCEDURE VectorizeText
 	@Text varchar(max),
 	@Vector vector(1536) OUTPUT
 AS
@@ -302,7 +304,7 @@ although others (such as Dot Product and Euclidean) are also supported for speci
 */
 
 -- Create a stored procedure to run a vector search using the Cosine Distance metric
-CREATE PROCEDURE VectorSearch
+CREATE OR ALTER PROCEDURE VectorSearch
 	@Question varchar(max)
 AS
 BEGIN
@@ -372,6 +374,7 @@ EXEC VectorSearch 'Comedy'
 EXEC VectorSearch 'Fantasy/Adventure'
 
 -- Add a few more questions relating to your favorite movies
---EXEC VectorSearch 'HAL'
---EXEC VectorSearch 'I''m sorry Dave, I''m afraid I can''t do that'
---EXEC VectorSearch 'Tom Cruise'
+EXEC VectorSearch 'HAL'
+EXEC VectorSearch 'I''m sorry Dave, I''m afraid I can''t do that'
+EXEC VectorSearch 'Tom Cruise'
+EXEC VectorSearch 'Psycho Thriller'
