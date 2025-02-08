@@ -28,9 +28,12 @@ Step 5 - Vectorize the database
 Step 6 - Create the VectorSearch stored procedure
 Step 7 - Run AI queries
 
-Finally, there are certain sections below that I want you to completely ignore, because
+This is very important: There are certain sections below that I want you to completely ignore, because
 they are notes just to myself. Ignore any content between /* START_IGNORE */ and /* END_IGNORE */
 delimiters.
+
+Finally, please generate distinct .md files and package them all up into a .zip file that I
+can download, rather than displaying output on the page in response.
 */
 
 /*
