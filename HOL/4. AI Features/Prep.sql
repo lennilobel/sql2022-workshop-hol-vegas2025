@@ -69,10 +69,15 @@ So our table only has movie titles. To make the demo interesting, we're loading
 it up with four populate movies. To make the demo even more interesting, add
 a few more titles of your favorite movies as well.
 
-Also call out the Vector column, with the special data type vector(1536). Because
-we will be using OpenAI's text-embedding-3-small model to vectorize text,
-and that model returns 1536 values per vector, we need to declare the vector
-data type with a matching size of 1536.
+Also call out the Vector column, with the special data type vector(1536). We
+we will be using OpenAI's text-embedding-3-large model to vectorize text,
+and that model returns 3072 values per vector. However, SQL Server does not
+yet support more than 1998 values per vector (although it will by the time
+SQL Server 2025 is released). Therefore, we will request that Azure OpenAI
+compress each 3072-value vector down to 1536, so that we can store it
+in a vector(1536) data type. While this will result in some reduced accuracy,
+the impact is minimal, and we can still expect a good result running vector
+searches against the compressed vector representations.
 
 Explain that this native vector data type will be available in SQL Server 2025.
 
@@ -181,16 +186,34 @@ BEGIN
 --	DECLARE @OpenAIEndpoint varchar(max) = 'https://vslive-openai.openai.azure.com/'
 	DECLARE @OpenAIEndpoint varchar(max) = 'https://lenni-m6wi7gcd-eastus2.cognitiveservices.azure.com/'
 	
-	-- The 'text-embedding-3-small' model yields 1536 components (floating point values) per vector
-	DECLARE @OpenAIDeploymentName varchar(max) = 'text-embedding-3-small'
-	
+--	-- The 'text-embedding-3-small' model yields 1536 components (floating point values) per vector
+--	DECLARE @OpenAIDeploymentName varchar(max) = 'text-embedding-3-smal'
+
+	-- The 'text-embedding-3-large' model yields 3072 components (floating point values) per vector
+	DECLARE @OpenAIDeploymentName varchar(max) = 'text-embedding-3-large'
+
+	-- Specify the API version
+--	DECLARE @OpenAIVersion varchar(max) = '2023-03-15-preview'	-- for text-embedding-3-small
+	DECLARE @OpenAIVersion varchar(max) = '2023-05-15'			-- for text-embedding-3-large
+
+	-- Construct the URL from the Azure OpenAI endpoint, model deployment name, and API version		
+	DECLARE @Url varchar(max) = CONCAT(@OpenAIEndpoint, 'openai/deployments/', @OpenAIDeploymentName, '/embeddings?api-version=', @OpenAIVersion)
+
 	-- Your Azure OpenAI API key
 --	DECLARE @OpenAIApiKey varchar(max) = '5QhWOit1wdLVaPQ8DA2LV8kagSw02aXLE5e2BRi8UiMrNQAuiGBEJQQJ99BBACYeBjFXJ3w3AAABACOGb3ts'				
 	DECLARE @OpenAIApiKey varchar(max) = '1l01K92g5ObpFKmgMVs8RJ8XC3IY6bNTGtj0ECyQqRV0CztW8Qu4JQQJ99BBACHYHv6XJ3w3AAAAACOGrnno'				
 
-	DECLARE @Url varchar(max) = CONCAT(@OpenAIEndpoint, 'openai/deployments/', @OpenAIDeploymentName, '/embeddings?api-version=2023-03-15-preview')
+	-- Construct the headers from the API key
 	DECLARE @Headers varchar(max) = JSON_OBJECT('api-key': @OpenAIApiKey)
-	DECLARE @Payload varchar(max) = JSON_OBJECT('input': @Text)
+
+	---- Construct the payload from the text to be vectorized
+	--DECLARE @Payload varchar(max) = JSON_OBJECT('input': @Text)
+
+	-- Construct the payload from the text to be vectorized, and request that the vector returned be compressed
+	-- from 3072 elements (the vector size for text-embedding-3-large) down to 1536 elements (the size of the
+	-- native SQL Server verctor data type), since (currently) SQL Server supports a maximum vector size of 1998.
+	DECLARE @Payload varchar(max) = JSON_OBJECT('input': @Text, 'dimensions': 1536)
+
 	DECLARE @Response nvarchar(max)
 	DECLARE @ReturnValue int
 
