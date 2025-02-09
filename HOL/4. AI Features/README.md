@@ -1,4 +1,4 @@
-# AI-Enabled SQL Server Lab
+# AI Features
 
 The labs in this section introduce you to powerful AI capabilities **coming soon** in SQL Server 2025.
 
