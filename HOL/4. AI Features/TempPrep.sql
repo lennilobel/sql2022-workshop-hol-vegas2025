@@ -104,7 +104,7 @@ to focus on these foundational AI concepts:
 3) running a vector search in SQL Server to match the most similar result
 
 So our table only has movie titles. To make the demo interesting, we're loading
-it up with four populate movies. To make the demo even more interesting, add
+it up with four popular movies. To make the demo even more interesting, add
 a few more titles of your favorite movies as well.
 
 Also call out the Vector column, with the special data type vector(1536). We
@@ -340,12 +340,7 @@ GO
 /*
 Step 6 - Create the VectorSearch stored procedure
 
-This stored procedure accepts a natural language query in the @Question parameter, calls the
-VectorizeText stored procedure (the same one used to vectorize the Movie table) to vectorize
-the question, and then uses the VECTOR_DISTANCE function in a SQL query to retrieve the
-movie title that most similarly matches the question. Using TOP 1 with ORDER BY on the calculated
-distance returns the most similar result (since least distant is most similar), based on the
-semantic meaning embedded in the movie database vectors and the user's query vector.
+This stored procedure accepts a natural language query in the @Question parameter, calls the VectorizeText stored procedure (the same one used to vectorize the Movie table) to vectorize the question, and then uses the VECTOR_DISTANCE function in a SQL query to retrieve the movie title that most similarly matches the question. Using TOP 1 with ORDER BY on the calculated distance returns the most similar result (since least distant is most similar), based on the semantic meaning embedded in the movie database vectors and the user's query vector.
 
 Explain that VECTOR_DISTANCE will be available in SQL Server 2025.
 
